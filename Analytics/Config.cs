@@ -30,6 +30,17 @@ namespace Segment
 			this.Async = Defaults.Async;
         }
 
+        /// <summary>
+        /// Sets the endpoint to send the requests to. The default is 
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
+        public Config SetHost(string host)
+        {
+            this.Host = host;
+            return this;
+        }
+
 		/// <summary>
 		/// Sets the maximum amount of timeout on the HTTP request flushes to the server.
 		/// </summary>
