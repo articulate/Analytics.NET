@@ -48,6 +48,7 @@ namespace Segment.Request
 			try
 			{
 				Uri uri = new Uri(_client.Config.Host);
+                IWebProxy webProxy = _client.Config.WebProxy;
 
 				// set the current request time
 				batch.SentAt = DateTime.Now.ToString("o");
@@ -60,7 +61,12 @@ namespace Segment.Request
 				// https://segment.io/docs/tracking-api/reference/#authentication
 				request.Headers["Authorization"] = BasicAuthHeader(batch.WriteKey, "");
 
-				request.Timeout = (int)Timeout.TotalMilliseconds;
+			    if (webProxy != null)
+			    {
+			        request.Proxy = webProxy;
+			    }
+
+			    request.Timeout = (int)Timeout.TotalMilliseconds;
 				request.ContentType = "application/json";
 				request.Method = "POST";
 

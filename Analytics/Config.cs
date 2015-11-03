@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace Segment
@@ -16,6 +17,8 @@ namespace Segment
         /// </summary>
         internal string Host { get; set; }
 
+        internal IWebProxy WebProxy { get; set; }
+
         internal int MaxQueueSize { get; set; }
 
 		internal bool Async { get; set; }
@@ -28,12 +31,13 @@ namespace Segment
 			this.Timeout = Defaults.Timeout;
             this.MaxQueueSize = Defaults.MaxQueueCapacity;
 			this.Async = Defaults.Async;
+            WebProxy = null;
         }
 
         /// <summary>
         /// Sets the endpoint to send the requests to. The default is 
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="host">The url to use</param>
         /// <returns></returns>
         public Config SetHost(string host)
         {
@@ -41,7 +45,18 @@ namespace Segment
             return this;
         }
 
-		/// <summary>
+        /// <summary>
+        /// Sets the endpoint to send the requests to. The default is
+        /// </summary>
+        /// <param name="webProxy">The web proxy to use</param>
+        /// <returns></returns>
+        public Config SetWebProxy(IWebProxy webProxy)
+        {
+            this.WebProxy = webProxy;
+            return this;
+        }
+
+        /// <summary>
 		/// Sets the maximum amount of timeout on the HTTP request flushes to the server.
 		/// </summary>
 		/// <param name="timeout"></param>
