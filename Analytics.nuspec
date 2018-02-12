@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
        <id>Articulate.Segment.Analytics</id>
-        <version>1.0.2</version>
+        <version>2.1.0</version>
         <title>Articulate Segment Analytics</title>
         <authors>Articulate</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
