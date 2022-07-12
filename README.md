@@ -18,7 +18,7 @@ This package is not currently built and deployed by AppVeyor like most of our ot
 - Update the version in `Analytics.nuspec`
 - Build the project in the Release configuration.
 - Run `nuget pack Analytics.nuspec`
-- Deploy the resulting `.nupkg` file to Artifactory.
+- Deploy the resulting `.nupkg` file to GitHub packages.
 
 ## License
 
