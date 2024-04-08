@@ -3,11 +3,11 @@
     <metadata>
       <id>Articulate.Segment.Analytics</id>
       <repository type="git" url="https://github.com/articulate/nuget-legacy.git" />
-      <version>2.3.0</version>
+      <version>2.4.0</version>
       <title>Articulate Segment Analytics</title>
       <authors>Articulate</authors>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
-      <description>This is our custom build of the segment analytics SDK with compatibility changes to support .net 4.5.2, the correct version of newtonsoft json and also some changes to allow us to set the host endpoint</description>
+      <description>This is our custom build of the segment analytics SDK with compatibility changes to support netstandard2.0, the correct version of newtonsoft json and also some changes to allow us to set the host endpoint</description>
       <summary>Custom build for the Segment Analytics SDK</summary>
     </metadata>
     <files>
