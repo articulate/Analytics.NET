@@ -28,9 +28,9 @@ namespace Segment.Test
 
 			RunTests(Analytics.Client, trials);
 
-			Assert.AreEqual(trials, Analytics.Client.Statistics.Submitted);
-			Assert.AreEqual(trials, Analytics.Client.Statistics.Succeeded);
-			Assert.AreEqual(0, Analytics.Client.Statistics.Failed);
+			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Submitted));
+			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
+			Assert.That(Analytics.Client.Statistics.Failed, Is.EqualTo(0));
 		}
 
         [Test()]
@@ -47,10 +47,10 @@ namespace Segment.Test
 
 			Thread.Sleep (1000); // cant use flush to wait during asynchronous flushing
 
-			Assert.AreEqual(trials, Analytics.Client.Statistics.Submitted);
-			Assert.AreEqual(trials, Analytics.Client.Statistics.Succeeded);
-			Assert.AreEqual(0, Analytics.Client.Statistics.Failed);
-		}
+			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Submitted));
+			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
+            Assert.That(Analytics.Client.Statistics.Failed, Is.EqualTo(0));
+        }
 
         [Test()]
 		public void PerformanceTest()
@@ -70,11 +70,11 @@ namespace Segment.Test
 
 			TimeSpan duration = DateTime.Now.Subtract(start);
 
-			Assert.AreEqual(trials, Analytics.Client.Statistics.Submitted);
-			Assert.AreEqual(trials, Analytics.Client.Statistics.Succeeded);
-			Assert.AreEqual(0, Analytics.Client.Statistics.Failed);
+			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Submitted));
+			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
+			Assert.That(Analytics.Client.Statistics.Failed, Is.EqualTo(0));
 
-			Assert.IsTrue(duration.CompareTo(TimeSpan.FromSeconds(20)) < 0);
+			Assert.That(duration.CompareTo(TimeSpan.FromSeconds(20)), Is.LessThan(0));
 		}
 
 		private void RunTests(Client client, int trials)
