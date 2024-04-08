@@ -13,5 +13,6 @@
     <files>
       <file src="Analytics/bin/Release/Analytics.NET.dll" target="lib" />
       <file src="Analytics/bin/Release/Analytics.NET.pdb" target="lib" />
+      <file src="Analytics/bin/Release/Analytics.NET.deps.json" target="lib" />
     </files>
 </package>
