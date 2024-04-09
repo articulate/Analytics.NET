@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
     <OutputType>Library</OutputType>
     <RootNamespace>Segment</RootNamespace>
     <AssemblyName>Analytics.NET</AssemblyName>
@@ -26,6 +26,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
   </ItemGroup>
 </Project>
