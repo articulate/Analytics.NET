@@ -1,113 +1,108 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Threading;
-
-using Segment;
 using Segment.Model;
+using System;
+using System.Linq;
+using System.Threading;
 
 namespace Segment.Test
 {
-	[TestFixture ()]
-	public class FlushTests
-	{
-		[SetUp] 
-		public void Init()
-		{
+    [TestFixture]
+    public class FlushTests
+    {
+        [SetUp]
+        public void Init()
+        {
             Analytics.Dispose();
             Logger.Handlers += LoggingHandler;
-		}
+        }
 
-		[Test ()]
-		public void SynchronousFlushTest ()
-		{
-			Analytics.Initialize(Constants.WRITE_KEY, new Config().SetAsync(false));
-			Analytics.Client.Succeeded += Client_Succeeded;
-			Analytics.Client.Failed += Client_Failed;
+        [Test]
+        public void SynchronousFlushTest()
+        {
+            Analytics.Initialize(Constants.WRITE_KEY, new Config().SetAsync(false));
+            Analytics.Client.Succeeded += Client_Succeeded;
+            Analytics.Client.Failed += Client_Failed;
 
-			int trials = 10;
+            var trials = 10;
 
-			RunTests(Analytics.Client, trials);
+            RunTests(Analytics.Client, trials);
 
-			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Submitted));
-			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
-			Assert.That(Analytics.Client.Statistics.Failed, Is.EqualTo(0));
-		}
-
-        [Test()]
-		public void AsynchronousFlushTest()
-		{
-			Analytics.Initialize(Constants.WRITE_KEY, new Config().SetAsync(true));
-
-			Analytics.Client.Succeeded += Client_Succeeded;
-			Analytics.Client.Failed += Client_Failed;
-
-			int trials = 10;
-
-			RunTests(Analytics.Client, trials);
-
-			Thread.Sleep (1000); // cant use flush to wait during asynchronous flushing
-
-			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Submitted));
-			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
+            Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Submitted));
+            Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
             Assert.That(Analytics.Client.Statistics.Failed, Is.EqualTo(0));
         }
 
-        [Test()]
-		public void PerformanceTest()
-		{
-			Analytics.Initialize(Constants.WRITE_KEY);
+        [Test]
+        public void AsynchronousFlushTest()
+        {
+            Analytics.Initialize(Constants.WRITE_KEY, new Config().SetAsync(true));
 
-			Analytics.Client.Succeeded += Client_Succeeded;
-			Analytics.Client.Failed += Client_Failed;
+            Analytics.Client.Succeeded += Client_Succeeded;
+            Analytics.Client.Failed += Client_Failed;
 
-			int trials = 100;
+            var trials = 10;
 
-			DateTime start = DateTime.Now;
+            RunTests(Analytics.Client, trials);
 
-			RunTests(Analytics.Client, trials);
+            Thread.Sleep(1000); // cant use flush to wait during asynchronous flushing
 
-			Analytics.Client.Flush();
+            Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Submitted));
+            Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
+            Assert.That(Analytics.Client.Statistics.Failed, Is.EqualTo(0));
+        }
 
-			TimeSpan duration = DateTime.Now.Subtract(start);
+        [Test]
+        public void PerformanceTest()
+        {
+            Analytics.Initialize(Constants.WRITE_KEY);
 
-			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Submitted));
-			Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
-			Assert.That(Analytics.Client.Statistics.Failed, Is.EqualTo(0));
+            Analytics.Client.Succeeded += Client_Succeeded;
+            Analytics.Client.Failed += Client_Failed;
 
-			Assert.That(duration.CompareTo(TimeSpan.FromSeconds(20)), Is.LessThan(0));
-		}
+            var trials = 100;
 
-		private void RunTests(Client client, int trials)
-		{
-			for (int i = 0; i < trials; i += 1)
-			{
-				Actions.Random(client);
-			}
-		}
+            DateTime start = DateTime.Now;
 
-		void Client_Failed(BaseAction action, System.Exception e)
-		{
-			Console.WriteLine(String.Format("Action [{0}] {1} failed : {2}", 
-				action.MessageId, action.Type, e.Message));
-		}
+            RunTests(Analytics.Client, trials);
 
-		void Client_Succeeded(BaseAction action)
-		{
-			Console.WriteLine(String.Format("Action [{0}] {1} succeeded.", 
-				action.MessageId, action.Type));
-		}
+            Analytics.Client.Flush();
 
-        static void LoggingHandler(Logger.Level level, string message, Dict args)
+            TimeSpan duration = DateTime.Now.Subtract(start);
+
+            Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Submitted));
+            Assert.That(trials, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
+            Assert.That(Analytics.Client.Statistics.Failed, Is.EqualTo(0));
+
+            Assert.That(duration.CompareTo(TimeSpan.FromSeconds(20)), Is.LessThan(0));
+        }
+
+        private static void RunTests(Client client, int trials)
+        {
+            for (var i = 0; i < trials; i += 1)
+            {
+                Actions.Random(client);
+            }
+        }
+
+        private static void Client_Failed(BaseAction action, System.Exception e)
+        {
+            Console.WriteLine($"Action [{action.MessageId}] {action.Type} failed : {e.Message}");
+        }
+
+        private static void Client_Succeeded(BaseAction action)
+        {
+            Console.WriteLine($"Action [{action.MessageId}] {action.Type} succeeded.");
+        }
+
+        private static void LoggingHandler(Logger.Level level, string message, Dict args)
         {
             if (args != null)
             {
-                foreach (string key in args.Keys)
-                {
-                    message += String.Format(" {0}: {1},", "" + key, "" + args[key]);
-                }
+                message = args.Keys.Aggregate(message, (current, key) => current + $" {"" + key}: {"" + args[key]},");
             }
-            Console.WriteLine(String.Format("[FlushTests] [{0}] {1}", level, message));
+
+            Console.WriteLine($"[FlushTests] [{level}] {message}");
         }
-	}
+    }
 }
 

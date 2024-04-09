@@ -7,18 +7,24 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Articulate.snk</AssemblyOriginatorKeyFile>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-
     <PackageId>Articulate.Segment.Analytics</PackageId>
     <version>2.4.0</version>
     <title>Articulate Segment Analytics</title>
     <authors>Articulate</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <description>This is our custom build of the segment analytics SDK with compatibility changes to support netstandard2.0, the correct version of newtonsoft json, and also some changes to allow us to set the host endpoint</description>
     <summary>Custom build for the Segment Analytics SDK</summary>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
