@@ -55,7 +55,9 @@ namespace Segment.Request
 
 				string json = JsonConvert.SerializeObject(batch, settings);
 
-				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(uri);
+#pragma warning disable SYSLIB0014 // WebRequest.Create() is marked obsolete in Net6.0+
+                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(uri);
+#pragma warning restore SYSLIB0014
 
 				// Basic Authentication
 				// https://segment.io/docs/tracking-api/reference/#authentication
