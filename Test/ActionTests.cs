@@ -64,9 +64,9 @@ namespace Segment.Test
 
 		private void FlushAndCheck (int messages) {
 			Analytics.Client.Flush();
-			Assert.AreEqual(messages, Analytics.Client.Statistics.Submitted);
-			Assert.AreEqual(messages, Analytics.Client.Statistics.Succeeded);
-			Assert.AreEqual(0, Analytics.Client.Statistics.Failed);
+			Assert.That(messages, Is.EqualTo(Analytics.Client.Statistics.Submitted));
+			Assert.That(messages, Is.EqualTo(Analytics.Client.Statistics.Succeeded));
+			Assert.That(Analytics.Client.Statistics.Failed, Is.EqualTo(0));
 		}
 
         static void LoggingHandler(Logger.Level level, string message, Dict args)

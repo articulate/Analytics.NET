@@ -25,6 +25,12 @@ namespace Segment.Test
 			// verify it doesn't fail for a null options
 			client.Screen("bar", "qaz", null, null);
 		}
+		
+        [TearDown]
+        public void Teardown()
+        {
+			client.Dispose();
+        }
 	}
 }
 
