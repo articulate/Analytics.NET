@@ -23,7 +23,7 @@ This package is not currently built and deployed by AppVeyor like most of our ot
 - Update the version in `Analytics\Analytics.cs`
 - Update the version in `Analytics\Analytics.csproj`
 - Run `dotnet pack -c Release`
-- Deploy the resulting `.nupkg` file to GitHub packages.
+- Run `dotnet nuget push Analytics\bin\Release\*.nupkg --source "github"`
 
 ## License
 

@@ -15,6 +15,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <description>This is our custom build of the segment analytics SDK with compatibility changes to support netstandard2.0, the correct version of newtonsoft json, and also some changes to allow us to set the host endpoint</description>
     <summary>Custom build for the Segment Analytics SDK</summary>
+    <RepositoryUrl>https://github.com/orgs/articulate/packages</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
